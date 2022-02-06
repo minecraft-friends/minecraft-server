@@ -1,3 +1,4 @@
+# Find a candidate AMI on Ubuntu LTS with SSD-backed storage
 data "aws_ami" "ubuntu" {
   most_recent = true
 
@@ -16,7 +17,7 @@ data "aws_ami" "ubuntu" {
 
 resource "aws_instance" "web" {
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "m6i.xlarge"
+  instance_type = var.instance_size
 
   tags = {
     Name = "HelloWorld"
