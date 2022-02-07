@@ -8,3 +8,6 @@ tfplan
 
 # ssh key stuff
 *ssh*
+
+# Ignore zip files that we don't want in version control
+*.zip

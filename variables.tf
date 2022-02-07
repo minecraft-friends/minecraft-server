@@ -33,3 +33,4 @@ variable "allow_ssh" {
   description = "Other IPs you'd like to allow SSH traffic from (the current machine's WAN IP will be added automatically)."
   default = [""]
 }
+
