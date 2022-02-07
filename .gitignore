@@ -3,7 +3,7 @@
 # excluding state so if others run this in their AWS accounts it doesn't screw with their state
 .terraform.lock.hcl
 .terraform
-terraform.tfstate
+terraform.tfstate*
 tfplan
 
 # ssh key stuff

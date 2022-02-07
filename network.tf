@@ -50,4 +50,5 @@ resource "aws_security_group" "minecraft_server_allow_ssh" {
     to_port   = 22
     cidr_blocks = concat(["${chomp(data.http.myip.body)}/32"], compact(var.allow_ssh))
   }
+  tags = local.tags
 }
