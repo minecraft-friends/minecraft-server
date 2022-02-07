@@ -27,6 +27,19 @@ resource "aws_instance" "minecraft_server" {
   key_name = var.ssh_key_name
   subnet_id = aws_subnet.minecraft_server_public_subnet.id
   vpc_security_group_ids = [aws_security_group.minecraft_server_allow_ssh.id]
+  user_data_base64 = base64encode(
+    templatefile("bootstrap.sh", {
+      bucket = aws_s3_bucket.snapshot_bucket
+      java = {
+        type = "openjdk"
+        version = "17"
+      }
+      snapshot = {
+        name = split(".", var.snapshot)[0]
+        ext = split(".", var.snapshot)[1]
+      }
+    })
+  )
   tags = local.tags
 }
 

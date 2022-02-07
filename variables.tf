@@ -34,3 +34,8 @@ variable "allow_ssh" {
   default = [""]
 }
 
+variable "snapshot" {
+  type = string
+  description = "The path to a server snapshot (.zip) to load on the server"
+  default = "snapshot.zip"
+}
