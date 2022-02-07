@@ -18,14 +18,14 @@ Make sure you install the required tools listed above.  Then, you can do the fol
 5. Execute the plan: `terraform apply tfplan`
 
 ### Variables 
-| Variable      | Description                                                                           | Default                | Example                      |
-|---------------|---------------------------------------------------------------------------------------|------------------------|------------------------------|
-| instance_size | The [instance size](https://aws.amazon.com/ec2/instance-types/) to use for the server | `m6i.large`            | `m6i.large`                  |
-| region        | The region in which to deploy the instance                                            | `us-east-1`            | `us-west-2`                  |
-| ssh_key_name  | What to name the SSH key in AWS                                                       | `minecraft-server-key` | `my-server-key`              |
-| ssh_key_path  | The path to the SSH key (locally) that you'd like to use                              | `./ssh_key.pub`        | `/path/to/my/file`           |
-| port          | The port to run the server on                                                         | `14375`                | `19999`                      |
-| allow_ssh     | A list of other IPs you'd like to allow SSH access to the server                      | `<your WAN IP>`        | `24.35.142.98,34.234.894.23` |
+| Variable        | Description                                                                           | Default                | Example                      |
+|-----------------|---------------------------------------------------------------------------------------|------------------------|------------------------------|
+| `instance_size` | The [instance size](https://aws.amazon.com/ec2/instance-types/) to use for the server | `m6i.large`            | `m6i.large`                  |
+| `region`        | The region in which to deploy the instance                                            | `us-east-1`            | `us-west-2`                  |
+| `ssh_key_name`  | What to name the SSH key in AWS                                                       | `minecraft-server-key` | `my-server-key`              |
+| `ssh_key_path`  | The path to the SSH key (locally) that you'd like to use                              | `./ssh_key.pub`        | `/path/to/my/file`           |
+| `port`          | The port to run the server on                                                         | `14375`                | `19999`                      |
+| `allow_ssh`     | A list of other IPs you'd like to allow SSH access to the server                      | `<your WAN IP>`        | `24.35.142.98,34.234.894.23` |
 
 ## Resources
 | Resource                | TF Key                                                  | Description                                                        |
@@ -41,6 +41,6 @@ Make sure you install the required tools listed above.  Then, you can do the fol
 | Security Group          | `aws_security_group.minecraft_server_allow_ssh`         | The security group that permits external access for ssh and egress |
 
 # Outputs
-| Output           | Description                                 |
-|------------------|---------------------------------------------|
-| server_public_ip | The public IP address of the server created |
+| Output             | Description                                 |
+|--------------------|---------------------------------------------|
+| `server_public_ip` | The public IP address of the server created |
