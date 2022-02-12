@@ -50,5 +50,13 @@ resource "aws_security_group" "minecraft_server_allow_ssh" {
     to_port   = 22
     cidr_blocks = concat(["${chomp(data.http.myip.body)}/32"], compact(var.allow_ssh))
   }
+
+  ingress {
+    from_port = 25565
+    protocol  = "tcp"
+    to_port   = 25565
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   tags = local.tags
 }

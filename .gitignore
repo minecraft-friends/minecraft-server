@@ -11,3 +11,5 @@ tfplan
 
 # Ignore zip files that we don't want in version control
 *.zip
+
+forge-v4
