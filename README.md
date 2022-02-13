@@ -9,6 +9,8 @@ appropriately/affordably for your use-case.
 1. An [AWS account](https://aws.amazon.com/) with configured [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) credentials
 2. [Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 3. A command line
+4. A bucket containing a zipped server snapshot
+5. A secret containing linux credentials for the service user
 
 ## Creating a Server
 Make sure you install the required tools listed above.  Then, you can do the following to create the server:

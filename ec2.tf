@@ -1,7 +1,11 @@
 locals {
+  env = split("-", split(".", terraform.workspace)[1])[0]
   device_name = "/dev/sdx"
+  ssh_key_name = "${local.project_name}-key"
   tags = {
-    project = "minecraft-server"
+    project = local.project_name
+    env = local.env
+    server = "${local.env}-minecraft-server"
   }
 }
 
@@ -25,18 +29,14 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "minecraft_server" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = var.instance_size
-  key_name = var.ssh_key_name
+  key_name = "${local.env}-${local.ssh_key_name}"
   subnet_id = aws_subnet.minecraft_server_public_subnet.id
   vpc_security_group_ids = [aws_security_group.minecraft_server_allow_ssh.id]
   iam_instance_profile = aws_iam_instance_profile.minecraft_server_profile.name
-#  root_block_device {
-#    volume_type = "gp3"
-#    volume_size = var.disk_space
-#  }
   user_data_base64 = base64encode(
     templatefile("bootstrap.sh", {
       bucket = {
-        bucket = var.snapshot_bucket
+        bucket = aws_s3_bucket.snapshot_bucket.bucket
       }
       zip_root = var.zip_root
       start_script = var.start_script
@@ -52,13 +52,20 @@ resource "aws_instance" "minecraft_server" {
     })
   )
 
+  lifecycle {
+    ignore_changes = [
+      ebs_block_device,
+      public_ip,
+    ]
+  }
+
   # Add hidden dependency on S3 so the server doesn't try to start before it has the world
 #  depends_on = [aws_s3_bucket_object.seed_snapshot]
   tags = local.tags
 }
 
 resource "aws_key_pair" "key_pair" {
-  key_name = var.ssh_key_name
+  key_name = "${local.env}-${local.ssh_key_name}"
   public_key = file(var.ssh_key_path)
   tags = local.tags
 }
@@ -72,15 +79,18 @@ resource "aws_volume_attachment" "minecraft_world_volume_att" {
 # For modifications to the volume: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/requesting-ebs-volume-modifications.html#elastic-volumes-limitations
 # Probably want to document how this works like: https://stackoverflow.com/questions/55265203/terraform-delete-all-resources-except-one
 resource "aws_ebs_volume" "minecraft_world_volume" {
-  availability_zone = format("%s%s", var.region, "a") # plop this in the first AZ in the region, cause we're bad developers
+  tags = local.tags
+
+  availability_zone = format("%s%s", local.region, "a") # plop this in the first AZ in the region, cause we're bad developers
   size = var.disk_space
   type = "gp3"
-#  lifecycle {
-#    prevent_destroy = true
-#  }
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_eip" "minecraft_server_eip" {
+  tags = local.tags
   instance = aws_instance.minecraft_server.id
   vpc = true
 }

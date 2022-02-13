@@ -1,0 +1,16 @@
+[Unit]
+Description=Minecraft Server
+After=syslog.target network.target
+
+[Service]
+User=minecraft
+WorkingDirectory=/forge-v4
+
+ExecStart=/forge-v4/start.sh
+Restart=always
+RestartSec=30
+
+StandardInput=null
+
+[Install]
+WantedBy=multi-user.target
