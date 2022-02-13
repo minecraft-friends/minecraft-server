@@ -5,6 +5,7 @@ This project WILL deploy AWS resources using your AWS CLI config.  By executing 
 you may be charged for the running of AWS resources.  You are responsible for making sure they are started/stopped
 appropriately/affordably for your use-case.
 
+
 ## Requirements
 1. An [AWS account](https://aws.amazon.com/) with configured [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) credentials
 2. [Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli)
