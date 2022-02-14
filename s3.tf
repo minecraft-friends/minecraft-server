@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "snapshot_bucket" {
-  bucket = "${local.env}-minecraft-snapshots-${formatdate("YYYYMMDDhhmmss", timestamp())}"
+  bucket = "${local.env}-minecraft-snapshots-298urhg"
   tags = local.tags
 }
 
