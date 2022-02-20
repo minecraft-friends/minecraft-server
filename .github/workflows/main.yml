@@ -5,9 +5,9 @@ on:
       - '*'
 env:
   AWS_REGION: "us-east-1"
-#permissions:
-#  id-token: write
-#  contents: write
+permissions:
+  id-token: write
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
