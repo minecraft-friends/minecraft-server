@@ -64,9 +64,16 @@ resource "aws_instance" "minecraft_server" {
   tags = local.tags
 }
 
+data "aws_s3_bucket_object" "server_ssh_key" {
+  bucket = aws_s3_bucket.snapshot_bucket.bucket
+  key = "ssh_key.pub"
+}
+
 resource "aws_key_pair" "key_pair" {
   key_name = "${local.env}-${local.ssh_key_name}"
-  public_key = file(var.ssh_key_path)
+#  public_key = file(var.ssh_key_path)
+  public_key = data.aws_s3_bucket_object.server_ssh_key.body
+  depends_on = [data.aws_s3_bucket_object.server_ssh_key]
   tags = local.tags
 }
 
