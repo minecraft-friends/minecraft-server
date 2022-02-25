@@ -1,15 +1,16 @@
 # Whitespace
 name: CI
-on: workflow_dispatch
-  inputs:
-    environment:
-      description: 'The environment to deploy to (dev is actually prod, test is test)'
-      required: true
-      default: 'dev'
-      type: choice
-      options:
-        - dev
-        - test
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'The environment to deploy to (dev is actually prod, test is test)'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - test
 env:
   AWS_REGION: "us-east-1"
 permissions:
