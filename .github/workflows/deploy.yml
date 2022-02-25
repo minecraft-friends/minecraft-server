@@ -34,7 +34,7 @@ jobs:
       - name: Terraform Init
         run: terraform init
       - name: Terraform Set Workspace
-        run: terraform workspace select us-east-1.dev-minecraft-server
+        run: terraform workspace select us-east-1.${{ github.event.inputs.environment }}-minecraft-server
       - name: Terraform Plan
         run: terraform plan -out tfplan
       - name: Terraform Apply
