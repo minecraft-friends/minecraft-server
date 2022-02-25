@@ -1,5 +1,5 @@
 # Whitespace
-name: CI
+name: Test Plan
 on:
   push:
     branches:
