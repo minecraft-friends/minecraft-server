@@ -6,4 +6,5 @@ module "minecraft_discord_bot" {
   ecs_task_image = "622452799301.dkr.ecr.us-west-2.amazonaws.com/minecraft-discord-bot:latest"
   env = local.environment
   tags = local.tags
+  region = local.region
 }

@@ -44,7 +44,7 @@ resource "aws_iam_role_policy" "minecraft_discord_bot_logs_policy" {
         ],
         Effect = "Allow",
         Resource = [
-          "arn:aws:logs:*:*:*"
+          aws_cloudwatch_log_group.minecraft_discord_bot.arn
         ]
       },
     ]

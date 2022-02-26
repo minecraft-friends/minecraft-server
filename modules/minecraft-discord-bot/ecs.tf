@@ -20,16 +20,16 @@ resource "aws_ecs_task_definition" "minecraft_discord_bot" {
   family = "service"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
-  cpu                      = 256
-  memory                   = 512
+  cpu                      = var.ecs_task_cpu
+  memory                   = var.ecs_task_memory
   execution_role_arn = aws_iam_role.minecraft_discord_bot_task_role.arn
   task_role_arn = aws_iam_role.minecraft_discord_bot_task_role.arn
   container_definitions = jsonencode([
     {
       name      = "minecraft_discord_bot"
       image     = var.ecs_task_image
-      cpu = 256
-      memory = 512
+      cpu = var.ecs_task_container_cpu
+      memory = var.ecs_task_container_memory
       environment= [
         {
           name = "BUCKET_NAME",
@@ -48,7 +48,7 @@ resource "aws_ecs_task_definition" "minecraft_discord_bot" {
         logDriver = "awslogs",
         options= {
           awslogs-group= aws_cloudwatch_log_group.minecraft_discord_bot.name,
-          "awslogs-region": "us-west-2",
+          "awslogs-region": var.region,
           "awslogs-stream-prefix": "ecs"
         }
       },
