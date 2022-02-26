@@ -29,6 +29,20 @@ resource "aws_iam_policy_attachment" "minecraft_discord_bot_task_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
+resource "aws_iam_role_policy" "minecraft_discord_bot_s3_access" {
+  name   = "${var.env}_minecraft_discord_bot_s3_access"
+  role   = aws_iam_role.minecraft_discord_bot_task_role.name
+  policy = jsonencode({
+      Action = [
+      "s3:GetObject",
+    ],
+      Effect = "Allow",
+      Resource = [
+        aws_cloudwatch_log_group.minecraft_discord_bot.arn
+      ]
+  })
+}
+
 resource "aws_iam_role_policy" "minecraft_discord_bot_logs_policy" {
   name   = "${var.env}_minecraft_discord_bot_lambda_logs"
   role   = aws_iam_role.minecraft_discord_bot_task_role.name
