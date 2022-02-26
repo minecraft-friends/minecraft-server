@@ -29,6 +29,11 @@ variable "config_bucket_key_name" {
   description = "The name of the bucket key used for the discord bot config"
 }
 
+variable "minecraft_server_ec2_instance_id" {
+  type = string
+  description = "The instance id of the EC2 instance"
+}
+
 variable "ecs_task_image" {
   type = string
   description = "The image used by the ecs task"

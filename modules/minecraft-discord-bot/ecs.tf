@@ -37,6 +37,10 @@ resource "aws_ecs_task_definition" "minecraft_discord_bot" {
         {
           name = "BUCKET_KEY_NAME",
           value = var.config_bucket_key_name
+        },
+        {
+          name = "EC2_INSTANCE_ID",
+          value = var.config_bucket_key_name
         }
       ],
       runtime_platform = {

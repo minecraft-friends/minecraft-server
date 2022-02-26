@@ -7,4 +7,5 @@ module "minecraft_discord_bot" {
   env = local.environment
   tags = local.tags
   region = local.region
+  minecraft_server_ec2_instance_id = aws_instance.minecraft_server.id
 }
