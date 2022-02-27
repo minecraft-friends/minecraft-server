@@ -33,13 +33,17 @@ resource "aws_iam_role_policy" "minecraft_discord_bot_s3_access" {
   name   = "${var.env}_minecraft_discord_bot_s3_access"
   role   = aws_iam_role.minecraft_discord_bot_task_role.name
   policy = jsonencode({
-      Action = [
-      "s3:GetObject",
-    ],
-      Effect = "Allow",
-      Resource = [
-        aws_cloudwatch_log_group.minecraft_discord_bot.arn
-      ]
+    Statement = [
+      {
+        Action = [
+          "s3:GetObject",
+        ],
+        Effect = "Allow",
+        Resource = [
+          "arn:aws:s3:::${var.config_bucket_name}"
+        ]
+      },
+    ]
   })
 }
 
