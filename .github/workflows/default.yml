@@ -3,7 +3,7 @@ name: Test Plan
 on:
   push:
     branches:
-      - '*'
+      - '**'
 env:
   AWS_REGION: "us-east-1"
 permissions:
