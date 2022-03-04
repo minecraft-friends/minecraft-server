@@ -40,9 +40,40 @@ resource "aws_iam_role_policy" "minecraft_discord_bot_s3_access" {
         ],
         Effect = "Allow",
         Resource = [
-          "arn:aws:s3:::${var.config_bucket_name}"
+          "arn:aws:s3:::${var.config_bucket_name}/*"
         ]
       },
+    ]
+  })
+}
+
+data "aws_caller_identity" "current_id" {}
+
+resource "aws_iam_role_policy" "minecraft_discord_bot_ec2_access" {
+  name   = "${var.env}_minecraft_discord_bot_ec2_access"
+  role   = aws_iam_role.minecraft_discord_bot_task_role.name
+  policy = jsonencode({
+    Statement = [
+      {
+        Action = [
+          "ec2:StartInstances",
+          "ec2:StopInstances",
+          "ec2:RebootInstances",
+        ],
+        Effect = "Allow",
+        Resource = [
+          "arn:aws:ec2::${data.aws_caller_identity.current_id.account_id}:instance/${var.minecraft_server_ec2_instance_id}"
+        ]
+      }, {
+        Action = [
+          "ec2:DescribeInstances",
+          "ec2:DescribeInstanceStatus",
+        ],
+        Effect = "Allow",
+        Resource = [
+          "*"
+        ]
+      }
     ]
   })
 }
