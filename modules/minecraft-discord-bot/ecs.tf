@@ -6,6 +6,7 @@ resource "aws_ecs_service" "minecraft_discord_bot" {
   desired_count   = 1
   network_configuration {
     subnets = [var.ecs_subnet_id]
+    assign_public_ip = true
   }
   tags = var.tags
 }
